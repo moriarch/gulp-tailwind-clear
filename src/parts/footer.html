@@ -1,0 +1,12 @@
+<script>
+let getScript=(b,d=()=>{})=>{let a=document.createElement("script");a.src=b;let c=document.getElementsByTagName("head")[0],e=!1;a.onload=a.onreadystatechange=function(){e||this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||(e=!0,d(),a.onload=a.onreadystatechange=null)},c.appendChild(a)}
+let loadStyle=a=>new Promise((c,d)=>{let b=document.createElement("link");b.type="text/css",b.rel="stylesheet",b.onload=()=>{c()},b.href=a,document.body.appendChild(b)})
+document.addEventListener("DOMContentLoaded", function () {
+    getScript('/js/lazy.js',()=>{
+        getScript('/js/app.js')
+    })
+    loadStyle('/css/app.css')
+});
+</script>
+</body>
+</html>
