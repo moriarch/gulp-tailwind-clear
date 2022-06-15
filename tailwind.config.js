@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ["./src/**/*.css", "./**/*.html"],
+  content: ["./src/**/*.html", './src/**/*.{js,jsx,ts,tsx,vue}'],
   theme: {
     screens: {
       'sm': '640px',
@@ -22,8 +22,11 @@ module.exports = {
       },
       colors: {
         primary: "#C2783B",
-        graybg:"#F3F3F3",
-        txt:  "#3F3F3F",
+        lightbg:"#34415A",
+        darkbg:  "#1C2431",
+      },
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
       },
     },
   },
