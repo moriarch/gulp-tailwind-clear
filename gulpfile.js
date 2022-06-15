@@ -3,6 +3,7 @@ const postcss = require("gulp-postcss");
 const csso = require("gulp-csso");
 const include = require("gulp-file-include");
 const prettyHtml = require("gulp-pretty-html");
+const htmlmin = require("gulp-htmlmin");
 const del = require("del");
 const autoprefixer = require("gulp-autoprefixer");
 const sync = require("browser-sync").create();
@@ -27,6 +28,7 @@ const html = () => {
         prefix: "@@",
       })
     )
+    .pipe(htmlmin())
     .pipe(prettyHtml())
     .pipe(dest("dist"))
     .pipe(sync.stream());
@@ -59,15 +61,16 @@ const css = () => {
 const svg = () => {
   return src("src/images/*").pipe(svgo()).pipe(dest("dist/images"));
 };
-
+const fonts = () => {
+  return src("src/fonts/*").pipe(dest("dist/fonts"));
+}
 
 const watcher = () => {
-  watch("src/*.html", parallel(html, css));
-  watch("src/parts/*.html", parallel(css,html));
-  watch("src/**/*.html", css);
+  watch("src/**/*.html", parallel(html, css));
   watch("src/**/*.css", css);
   watch("src/**/*.js", format);
   watch("src/**/*.svg", svg);
+  watch("src/fonts/*", fonts);
 };
 
 exports.watch = watcher;
@@ -75,6 +78,6 @@ exports.html = html;
 exports.clear = clear;
 exports.dev = series(
   clear,
-  parallel(format, svg, html, css),
+  parallel(format, svg, html, css, fonts),
   parallel(watcher, serve)
 );
